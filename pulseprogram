@@ -1,0 +1,1627 @@
+# 1 "/opt/PV-7.0.0/prog/curdir/gupages/ParaVision/exp/lists/pp/nes_IDEAL_spectrum.ppg"
+;===============================================================
+;=
+;= $Source: /pv/CvsTree/pv/gen/src/prg/methods/SPIRAL/nes_IDEAL_spectrum.ppg,v $
+;=
+;= A gradient echo imaging pulse program
+;=
+;= $Id: nes_IDEAL_spectrum.ppg,v 1.34 2013/08/29 12:31:35 sako Exp $
+;===============================================================
+
+  preset off
+
+;===========================================================
+;   includes
+;===========================================================
+# 1 "/opt/PV-7.0.0/exp/stan/nmr/lists/pp/MRI.include" 1
+;****************************************************************
+;
+; $Source$
+;
+; Copyright (c) 2006
+; Bruker BioSpin MRI GmbH
+; D-76275 Ettlingen, Germany
+;
+; All Rights Reserved
+;
+;;****************************************************************
+;MRI.include
+
+# 1 "/opt/PV-7.0.0/exp/stan/nmr/lists/pp/Avance.incl" 1
+;Avance3.incl
+;   for AV III
+;
+;avance-version (13/06/17)
+;
+;$CLASS=HighRes Incl
+;$COMMENT=
+
+# 169 "/opt/PV-7.0.0/exp/stan/nmr/lists/pp/Avance.incl"
+;$Id: Avance3.incl,v 1.9.6.1 2013/06/17 15:32:55 pfre Exp $
+# 14 "/opt/PV-7.0.0/exp/stan/nmr/lists/pp/MRI.include" 2
+
+define delay aqq
+define delay deparx
+define delay derxadc
+define delay rdepa
+
+# 21 "/opt/PV-7.0.0/exp/stan/nmr/lists/pp/MRI.include"
+"aqq=dw*td"
+"rdepa=de-depa"
+"deparx=depa-derx"
+"derxadc=derx-deadc"
+
+
+; contents of De2.incl - usage for different hardware versions to 
+; be checked - intermediate solution to support Jobs
+define delay rde1
+# 31 "/opt/PV-7.0.0/exp/stan/nmr/lists/pp/MRI.include"
+"rde1=de-de1"
+
+
+# 44 "/opt/PV-7.0.0/exp/stan/nmr/lists/pp/MRI.include"
+; end of contents of De2.incl
+
+
+# 65 "/opt/PV-7.0.0/exp/stan/nmr/lists/pp/MRI.include"
+	
+	
+
+
+# 74 "/opt/PV-7.0.0/exp/stan/nmr/lists/pp/MRI.include"
+	
+
+
+# 128 "/opt/PV-7.0.0/exp/stan/nmr/lists/pp/MRI.include"
+# 129 "/opt/PV-7.0.0/exp/stan/nmr/lists/pp/MRI.include"
+   
+
+
+# 141 "/opt/PV-7.0.0/exp/stan/nmr/lists/pp/MRI.include"
+	
+
+
+# 16 "/opt/PV-7.0.0/prog/curdir/gupages/ParaVision/exp/lists/pp/nes_IDEAL_spectrum.ppg" 2
+
+;#include <SpiralDef_O1Corr.mod>
+# 1 "/opt/PV-7.0.0/prog/curdir/gupages/ParaVision/exp/lists/pp/SpiralDef_grad_modified.mod" 1
+;****************************************************************
+;
+; Copyright (c) 2005
+; Bruker BioSpin MRI GmbH
+; D-76275 Ettlingen, Germany
+;
+; All Rights Reserved
+; $Id: SpiralDef.mod,v 1.5 2013/07/05 14:15:26 sako Exp $
+;
+; Module for spiral acquisition
+;
+;****************************************************************
+
+;---------------------------- durations -----------------------------------------------
+# 16 "/opt/PV-7.0.0/prog/curdir/gupages/ParaVision/exp/lists/pp/SpiralDef_grad_modified.mod"
+define delay SpirD0 = {$PVM_SpiralD0}
+define delay SpirD1 = {$PVM_SpiralD1}
+define delay SpirD2 = {$PVM_SpiralD2}
+
+; convert from ms to s
+"SpirD0 = SpirD0 / 1000"
+"SpirD1 = SpirD1 / 1000"
+"SpirD2 = SpirD2 / 1000"
+
+;---------------------------- interleave loop -----------------------------------------
+# 27 "/opt/PV-7.0.0/prog/curdir/gupages/ParaVision/exp/lists/pp/SpiralDef_grad_modified.mod"
+define loopcounter SpirNInt = {$PVM_SpiralNbOfInterleaves}
+define loopcounter SpirNDum = {$DS}
+
+define list<grad_scalar> PVM_SpiralInterleavCos
+define list<grad_scalar> PVM_SpiralInterleavSin
+
+; increment interleave counter
+subroutine spiralIncr
+# 40 "/opt/PV-7.0.0/prog/curdir/gupages/ParaVision/exp/lists/pp/SpiralDef_grad_modified.mod"
+; decrement interleave counter
+subroutine spiralDecr
+
+
+# 47 "/opt/PV-7.0.0/prog/curdir/gupages/ParaVision/exp/lists/pp/SpiralDef_grad_modified.mod"
+; reset interleave counter
+subroutine spiralReset
+
+
+# 54 "/opt/PV-7.0.0/prog/curdir/gupages/ParaVision/exp/lists/pp/SpiralDef_grad_modified.mod"
+; interleave loop to given label for dummy and real scans
+; (during GS mode or RG adjustment the first interleave is used)
+subroutine spiralLoop
+
+
+# 89 "/opt/PV-7.0.0/prog/curdir/gupages/ParaVision/exp/lists/pp/SpiralDef_grad_modified.mod"
+;---------------------------- gradient shapes -----------------------------------------
+
+
+# 94 "/opt/PV-7.0.0/prog/curdir/gupages/ParaVision/exp/lists/pp/SpiralDef_grad_modified.mod"
+;---------------------------- acquisition ---------------------------------------------
+
+; gradient shapes with acquisition using given receiver and reference phases
+
+subroutine spiralAcq_no
+subroutine spiralAcq
+# 18 "/opt/PV-7.0.0/prog/curdir/gupages/ParaVision/exp/lists/pp/nes_IDEAL_spectrum.ppg" 2
+
+# 1 "/opt/PV-7.0.0/exp/stan/nmr/lists/pp/TrajectoryDef.mod" 1
+;===============================================================
+;=
+;= $Source$
+;=
+;= Module for trajectory measurement
+;=
+;= $Id$
+;===============================================================
+
+;*******************************************************************************
+;	gradient shapes for gradientMode = 1,2 (shape)
+;*******************************************************************************
+# 39 "/opt/PV-7.0.0/exp/stan/nmr/lists/pp/TrajectoryDef.mod"
+ 
+
+
+# 43 "/opt/PV-7.0.0/exp/stan/nmr/lists/pp/TrajectoryDef.mod"
+;*******************************************************************************
+;	internal subroutines
+;*******************************************************************************
+
+; gradientMode = 0
+; make sure all subroutines exist (first definition is used)
+subroutine trajTestOn
+
+subroutine trajTestOff
+subroutine trajIncr
+# 59 "/opt/PV-7.0.0/exp/stan/nmr/lists/pp/TrajectoryDef.mod"
+define list<grad_scalar> PVM_TrajInt1r
+define list<grad_scalar> PVM_TrajInt2r
+define list<grad_scalar> PVM_TrajInt3r
+define list<grad_scalar> PVM_TrajInt1p
+define list<grad_scalar> PVM_TrajInt2p
+define list<grad_scalar> PVM_TrajInt3p
+define list<grad_scalar> PVM_TrajInt1s
+define list<grad_scalar> PVM_TrajInt2s
+define list<grad_scalar> PVM_TrajInt3s
+define list<grad_scalar> PVM_TrajAxisX
+define list<grad_scalar> PVM_TrajAxisY
+define list<grad_scalar> PVM_TrajAxisZ
+
+; general interleave increment
+subroutine trajIncrement
+
+# 93 "/opt/PV-7.0.0/exp/stan/nmr/lists/pp/TrajectoryDef.mod"
+;*******************************************************************************
+;	external subroutine
+;*******************************************************************************
+
+subroutine trajPerform
+
+# 19 "/opt/PV-7.0.0/prog/curdir/gupages/ParaVision/exp/lists/pp/nes_IDEAL_spectrum.ppg" 2
+
+# 1 "/opt/PV-7.0.0/exp/stan/nmr/lists/pp/PrepModulesHead.mod" 1
+;****************************************************************
+;
+; Copyright (c) 2003-2007
+; Bruker BioSpin MRI GmbH
+; D-76275 Ettlingen, Germany
+;
+; $Id$
+;
+; All Rights Reserved
+;
+; Declaration of pulseprogram parameters and subroutines for 
+; preparation  modules
+;
+; Must be included after MRI.include!
+;
+;****************************************************************
+
+;**** Fat Suppression ****
+# 1 "/opt/PV-7.0.0/exp/stan/nmr/lists/pp/FatSupDef.mod" 1
+;****************************************************************
+;
+; Copyright (c) 2018
+; Bruker BioSpin MRI GmbH
+; D-76275 Ettlingen, Germany
+;
+; $Id$
+;
+; All Rights Reserved
+;
+; FatSupDef.mod : Declaration of Fat Suppression Subroutine
+;
+;****************************************************************
+
+if (PVM_FatSupPerform == Yes)
+{
+  define pulse           fatSupPul   = {$PVM_FatSupRfLength}
+  define list<frequency> fatSupList  = {$PVM_FatSupFL}
+  
+  define delay fatSupRamp  = {$PVM_FatSupRampTime}
+  define delay fatSupAmp   = {$PVM_FatSupAmpEnable}
+  define delay fatSupWait  = {$PVM_FatSupGradWait}
+  define delay fatSupSpoil = {$PVM_FatSupSpoilDur}
+
+  ; convert from ms to s
+  "fatSupRamp  = fatSupRamp  / 1000"
+  "fatSupAmp   = fatSupAmp   / 1000"
+  "fatSupWait  = fatSupWait  / 1000"
+  "fatSupSpoil = fatSupSpoil / 1000"
+}
+subroutine FatSup
+# 20 "/opt/PV-7.0.0/exp/stan/nmr/lists/pp/PrepModulesHead.mod" 2
+
+
+;**** Flow Saturation ****
+# 1 "/opt/PV-7.0.0/exp/stan/nmr/lists/pp/FlowSatDef.mod" 1
+;****************************************************************
+;
+; Copyright (c) 2018
+; Bruker BioSpin MRI GmbH
+; D-76275 Ettlingen, Germany
+;
+; $Id$
+;
+; All Rights Reserved
+;
+; FlowSatDef.mod: Declaration of subroutines for Flow Saturation 
+; call
+; subr FlowSat()
+; subr FlowSatInit()
+; subr FlowSatInc()
+; 
+;****************************************************************
+
+if(PVM_InFlowSatOnOff == 1)
+{
+define list<frequency> modlis4 = {$PVM_InFlowSatFL}
+define list<grad_scalar> flowSatGrad={$PVM_InFlowSatGrad}
+
+define delay SfD0 = {$PVM_SfD0}
+define delay SfD1 = {$PVM_SfD1}
+define delay SfD2 = {$PVM_SfD2}
+# 28 "/opt/PV-7.0.0/exp/stan/nmr/lists/pp/FlowSatDef.mod"
+define pulse SfP0 = {$PVM_SfP0}
+define loopcounter SfLp0 = {$PVM_SfLp0}
+}
+
+
+subroutine FlowSat
+subroutine FlowSatInc
+subroutine FlowSatInit
+# 24 "/opt/PV-7.0.0/exp/stan/nmr/lists/pp/PrepModulesHead.mod" 2
+
+
+;**** Inversion Pulse ****
+# 1 "/opt/PV-7.0.0/exp/stan/nmr/lists/pp/InvPulseDef.mod" 1
+;****************************************************************
+;
+; Copyright (c) 2002-2007
+; Bruker BioSpin MRI GmbH
+; D-76275 Ettlingen, Germany
+;
+; $Id$
+;
+; All Rights Reserved
+;
+; InvPulseDef.mod : Declaration of Inversion Pulse subroutine
+;
+; call
+; subr InvPulse()
+;
+;****************************************************************
+;   
+;       PVM_InvRFPulseArr      :  
+;     
+;       sp22            TPQQ[14].name : PVM_InvRFPulsePropertyArr[0].Filename
+;
+;       PVM_IpP0                      :  PVM_InvRFPulseArr[0].PulseLength
+;
+;       PVM_IpD2                      :  PVM_InvPulseDelay[0]
+;       PVM_IpD3                      :  PVM_InvPulseSpoilTime[0]
+;       PVM_IpD1                      :  CONFIG_amplifier _enable
+;       PVM_IpD0                      :  PVM_RampTime
+;
+
+if(PVM_InvPulseOnOff == 1)
+{
+define list<frequency>  modlis2= {$PVM_InvPulseOffsetHz}
+define delay IpD0 = {$PVM_IpD0}
+define delay IpD1 = {$PVM_IpD1}
+define delay IpD2 = {$PVM_IpD2}
+define delay IpD3 = {$PVM_IpD3}
+
+define pulse IpP0 = {$PVM_IpP0}
+}
+subroutine InvPulse
+# 28 "/opt/PV-7.0.0/exp/stan/nmr/lists/pp/PrepModulesHead.mod" 2
+
+
+;**** Magnetisation Transfer ****
+# 1 "/opt/PV-7.0.0/exp/stan/nmr/lists/pp/MagTransDef.mod" 1
+;****************************************************************
+; $Source$
+;
+; Copyright (c) 2005-2007
+; Bruker BioSpin MRI GmbH
+; D-76275 Ettlingen, Germany
+;
+; All Rights Reserved
+;
+; MagTransDef.mod: Declaration of subroutine for Magnetization 
+;                  transfer 
+; call
+; subr MagTrans()
+;
+; $Id$
+;****************************************************************
+;**** Magnetisation Transfer Module ****
+
+
+if(PVM_MagTransOnOff)
+{
+define list<frequency> modlis3 = {$PVM_MagTransFL} 
+define delay MtD0 = {$PVM_MtD0}
+define delay MtD1 = {$PVM_MtD1}
+define delay MtD2 = {$PVM_MtD2}
+define delay MtD3 = {$PVM_MtD3}
+# 28 "/opt/PV-7.0.0/exp/stan/nmr/lists/pp/MagTransDef.mod"
+define pulse MtP0 = {$PVM_MtP0}
+
+define loopcounter MtLp0 = {$PVM_MtLp0}
+}
+
+subroutine MagTrans
+# 32 "/opt/PV-7.0.0/exp/stan/nmr/lists/pp/PrepModulesHead.mod" 2
+
+
+;**** Saturation Transfer ****
+# 1 "/opt/PV-7.0.0/exp/stan/nmr/lists/pp/SatTransDef.mod" 1
+;****************************************************************
+; $Source$
+;
+; Copyright (c) 2018
+; Bruker BioSpin MRI GmbH
+; D-76275 Ettlingen, Germany
+;
+; All Rights Reserved
+;
+; SatTransDef.mod: Declaration of subroutine for Saturation transfer 
+; call
+; subr SatTrans()
+;
+; $Id$
+;****************************************************************
+;**** Saturation Transfer Module ****
+
+
+; PVM_SatTransFL:        List of offset frequencies to be measured.
+; PVM_SattransNPulses:   Number of pulses used in one saturation event
+; PVM_SattransPowerList: List of RF amplitudes for saturation pulses.
+;                        Two elements long: first element: 0 Watt,
+;                        used for one reference scan. Subsequent scans
+;                        use amplitude as specified in UI.
+; StReference:           If PVM_SatTransRefScan is On then list StRfPower
+;                        has two elements (1st is zero for reference scan)
+;                        If RefScan is Off then lsit has only one element.
+;			 Nevertheless we increment to avoid another 'if'  
+# 31 "/opt/PV-7.0.0/exp/stan/nmr/lists/pp/SatTransDef.mod"
+if(PVM_SatTransOnOff)
+{
+  define list<frequency> modlis5    = {$PVM_SatTransFL}
+  define list<power> StRfPower      = {$PVM_SatTransPowerList}
+             
+  define delay StD0                 = {$PVM_StD0}
+  define delay StD1                 = {$PVM_StD1}
+  define delay StD2                 = {$PVM_StD2}
+  define delay StD3                 = {$PVM_StD3}
+
+  define pulse StP0                 = {$PVM_StP0}
+
+  define loopcounter StNPulses      = {$PVM_SatTransNPulses}
+  define loopcounter StReference
+  "StReference = 1"
+}
+subroutine SatTransInit
+subroutine SatTransInc
+subroutine SatTrans
+# 36 "/opt/PV-7.0.0/exp/stan/nmr/lists/pp/PrepModulesHead.mod" 2
+
+
+;**** Saturation Pulse ****
+# 1 "/opt/PV-7.0.0/exp/stan/nmr/lists/pp/SatPulseDef.mod" 1
+;****************************************************************
+;
+; Copyright (c) 2002-2003
+; Bruker BioSpin MRI GmbH
+; D-76275 Ettlingen, Germany
+;
+; $Id$
+;
+; All Rights Reserved
+;
+; SatPulseDef.mod : Declaration of Saturation Pulse subroutines
+; call 
+; subr SatPulse()
+;
+;****************************************************************
+;   
+;    PVM_SatRFPulseArr      :  
+;     
+;       sp28            DPQQ[12].name : PVM_SatRFPulsePropertyArr[0].Filename
+;       sp29            DPQQ[13].name : PVM_SatRFPulsePropertyArr[1].Filename
+;       sp30            DPQQ[14].name : PVM_SatRFPulsePropertyArr[2].Filename
+;       sp31            DPQQ[15].name : PVM_SatRFPulsePropertyArr[3].Filename
+;
+;       PVM_SpP0                     :  PVM_SatRFPulseArr[0].PulseLength
+;       PVM_SpP1                     :  PVM_SatRFPulseArr[1].PulseLength
+;       PVM_SpP2                     :  PVM_SatRFPulseArr[2].PulseLength
+;       PVM_SpP3                     :  PVM_SatRFPulseArr[3].PulseLength
+;
+;       PVM_SpD2                     :  PVM_SatPulseDelay1[0]
+;       PVM_SpD6                     :  PVM_SatPulseSpoilTime[0]
+;       PVM_SpD10                    :  PVM_SatPulseDelay2[0]
+;       PVM_SpD3                     :  PVM_SatPulseSpoilTime[1]
+;       PVM_SpD7                     :  PVM_SatPulseDelay1[1]
+;       PVM_SpD11                    :  PVM_SatPulseDelay2[1]
+;       PVM_SpD4                     :  PVM_SatPulseDelay1[2]
+;       PVM_SpD8                     :  PVM_SatPulseSpoilTime[2]
+;       PVM_SpD12                    :  PVM_SatPulseDelay2[2]
+;       PVM_SpD5                     :  PVM_SatPulseDelay1[3]
+;       PVM_SpD9                     :  PVM_SatPulseSpoilTime[3]
+;       PVM_SpD13                    :  PVM_SatPulseDelay2[3]
+;
+
+if(PVM_SatPulseOnOff == 1)
+   {
+define list<frequency> modlis7 = {$PVM_SatPulseOffsetHz}
+
+define delay SpD0 = {$PVM_SpD0}
+define delay SpD1 = {$PVM_SpD1}
+define delay SpD2 = {$PVM_SpD2}
+define delay SpD3 = {$PVM_SpD3}
+define delay SpD4 = {$PVM_SpD4}
+define delay SpD5 = {$PVM_SpD5}
+define delay SpD6 = {$PVM_SpD6}
+define delay SpD7 = {$PVM_SpD7}
+define delay SpD8 = {$PVM_SpD8}
+define delay SpD9 = {$PVM_SpD9}
+define delay SpD10 = {$PVM_SpD10}
+define delay SpD11 = {$PVM_SpD11}
+define delay SpD12 = {$PVM_SpD12}
+define delay SpD13 = {$PVM_SpD13}
+define pulse SpP0 = {$PVM_SpP0}
+define pulse SpP1 = {$PVM_SpP1}
+define pulse SpP2 = {$PVM_SpP2}
+define pulse SpP3 = {$PVM_SpP3}
+# 66 "/opt/PV-7.0.0/exp/stan/nmr/lists/pp/SatPulseDef.mod"
+   }
+
+
+subroutine SatPulse
+# 40 "/opt/PV-7.0.0/exp/stan/nmr/lists/pp/PrepModulesHead.mod" 2
+
+
+;*** FOV Saturation ***
+# 1 "/opt/PV-7.0.0/exp/stan/nmr/lists/pp/FovSatDef.mod" 1
+;****************************************************************
+;
+; Copyright (c) 2018
+; Bruker BioSpin MRI GmbH
+; D-76275 Ettlingen, Germany
+;
+; $Id$
+;
+; All Rights Reserved
+;
+; FovSat.mod : Declaration of FOV Saturation subroutine
+; call: subr FovSat()
+;
+;****************************************************************
+
+
+if (PVM_FovSatOnOff == On)
+{
+  define pulse           fovSatPul   = {$PVM_FovSatRfLength}
+  define list<frequency> fovSatList  = {$PVM_FovSatFL}
+  
+  define delay fovSatRamp  = {$PVM_FovSatRampTime}
+  define delay fovSatAmp   = {$PVM_FovSatAmpEnable}
+  define delay fovSatWait  = {$PVM_FovSatGradWait}
+  define delay fovSatSpoil = {$PVM_FovSatSpoilDur}
+# 27 "/opt/PV-7.0.0/exp/stan/nmr/lists/pp/FovSatDef.mod"
+  ; convert from ms to s
+  "fovSatRamp  = fovSatRamp  / 1000"
+  "fovSatAmp   = fovSatAmp   / 1000"
+  "fovSatWait  = fovSatWait  / 1000"
+  "fovSatSpoil = fovSatSpoil / 1000"  
+}
+
+subroutine FovSat
+
+# 55 "/opt/PV-7.0.0/exp/stan/nmr/lists/pp/FovSatDef.mod"
+; backwards compatibility
+subroutine SatSlices
+
+
+# 44 "/opt/PV-7.0.0/exp/stan/nmr/lists/pp/PrepModulesHead.mod" 2
+
+
+;**** Black Blood ****
+# 1 "/opt/PV-7.0.0/exp/stan/nmr/lists/pp/BlBloodDef.mod" 1
+;****************************************************************
+;
+; Copyright (c) 2007
+; Bruker BioSpin MRI GmbH
+; D-76275 Ettlingen, Germany
+;
+; $Id$
+;
+; All Rights Reserved
+;
+; BlBloodDef.mod : Declaration of Black blood  subroutine
+;
+; call
+; subr BlBlood(ph0) : Black blood preparation with RF phaselist
+;                     ph0
+;
+;****************************************************************
+
+if(PVM_BlBloodOnOff)
+{
+define list<frequency> modlis8 = {$PVM_BlBloodFL}
+define delay BlbD0 = {$PVM_BlbD0}
+define delay BlbD1 = {$PVM_BlbD1}
+define delay BlbD2 = {$PVM_BlbD2}
+define delay BlbD3 = {$PVM_BlbD3}
+
+define pulse BlbP0 = {$PVM_BlbP0}
+}
+subroutine BlBlood
+# 48 "/opt/PV-7.0.0/exp/stan/nmr/lists/pp/PrepModulesHead.mod" 2
+
+
+;**** Trigger ****
+# 1 "/opt/PV-7.0.0/exp/stan/nmr/lists/pp/TriggerDef.mod" 1
+;****************************************************************
+;
+; Copyright (c) 1998-2003
+; Bruker BioSpin MRI GmbH
+; D-76275 Ettlingen, Germany
+;
+; All Rights Reserved
+;
+; TriggerDef.mod - Trigger Module
+;
+;****************************************************************
+
+if (PVM_TriggerModule == On)
+{
+  define delay trigDur = {$PVM_TriggerDur}
+  define delay trigDel = {$PVM_TriggerDelay}
+
+  ; convert from ms to s
+  "trigDur = trigDur / 1000"
+  "trigDel = trigDel / 1000"
+}
+subroutine Trigger
+subroutine TriggerPhase
+subroutine TriggerSlice
+# 52 "/opt/PV-7.0.0/exp/stan/nmr/lists/pp/PrepModulesHead.mod" 2
+
+
+;**** Trigger Out ****
+# 1 "/opt/PV-7.0.0/exp/stan/nmr/lists/pp/TriggerOutDef.mod" 1
+;****************************************************************
+;
+; Copyright (c) 2003
+; Bruker BioSpin MRI GmbH
+; D-76275 Ettlingen, Germany
+;
+; All Rights Reserved
+; $Id$
+;****************************************************************
+
+if (PVM_TriggerOutOnOff == On)
+{
+  define delay trigOutDur = {$PVM_TriggerOutDur}
+  define delay trigOutDel = {$PVM_TriggerOutDelay}
+
+  ; convert from ms to s
+  "trigOutDur = trigOutDur / 1000"
+  "trigOutDel = trigOutDel / 1000"
+}
+subroutine TriggerOut
+subroutine TriggerOutStart
+subroutine TriggerOutSlice
+subroutine TriggerOutVolume
+# 56 "/opt/PV-7.0.0/exp/stan/nmr/lists/pp/PrepModulesHead.mod" 2
+
+
+;**** Outer Volume Suppression ****
+# 1 "/opt/PV-7.0.0/exp/stan/nmr/lists/pp/WsOvsDef.mod" 1
+;****************************************************************
+;
+; Copyright (c) 2005-2007
+; Bruker BioSpin MRI GmbH
+; D-76275 Ettlingen, Germany
+;
+; $Id$
+;
+; All Rights Reserved
+;
+; WsOvsDef.mod: Declaration of water suppression and Outer 
+;               volume suppression subroutines
+;
+; call 
+; subr Ovs(ph0) ;  execution of OVS with ph0 phaselist
+;
+; subr WsOvs(ph0,ph1) : execution of OVS with ph0 and WS with ph1
+;                       phaselist
+;****************************************************************
+
+;**** OuterVolumeSuppression ****
+
+if(PVM_OvsOnOff == 1)
+{
+define list<frequency> Ovslist={$PVM_OvsFrequencyList}
+define delay OvsD0 = {$PVM_OvsD0}
+define delay OvsD1 = {$PVM_OvsD1}
+define pulse OvsP0 = {$PVM_OvsP0}
+}
+subroutine Ovs
+# 62 "/opt/PV-7.0.0/exp/stan/nmr/lists/pp/WsOvsDef.mod"
+;*** WaterSuppression Module with OVS ****
+
+if (PVM_WsMode)
+{
+
+define list<frequency> Wslist={$PVM_WsOffsetHz}
+define pulse WsP0 = {$PVM_WsP0}
+define pulse WsP1 = {$PVM_WsP1}
+define pulse WsP2 = {$PVM_WsP2}
+define delay WsNp0 
+"WsNp0 = WsP0"
+define delay WsNp1 
+"WsNp1 = WsP1"
+define delay WsNp2 
+"WsNp2 = WsP2"
+define list<delay> ChD1={$PVM_ChppgD1}
+define list<delay> ChD2={$PVM_ChppgD2}
+define list<delay> VpD1={$PVM_VpppgD1}
+define list<delay> VpD2={$PVM_VpppgD2}
+# 82 "/opt/PV-7.0.0/exp/stan/nmr/lists/pp/WsOvsDef.mod"
+}
+
+
+subroutine WsOvsMain
+subroutine WsOvs
+subroutine Ws
+# 60 "/opt/PV-7.0.0/exp/stan/nmr/lists/pp/PrepModulesHead.mod" 2
+
+
+;**** Solvent Suppression module ****
+# 1 "/opt/PV-7.0.0/exp/stan/nmr/lists/pp/WsSatDef.mod" 1
+;******************************************************************
+;
+; Copyright (c) 2002-2007
+; Bruker BioSpin MRI GmbH
+; D-76275 Ettlingen, Germany
+;
+; $Id$ 
+;
+; All Rights Reserved
+;
+; WsSatDef.mod - Declaration of water suppression and FOV saturation 
+;                subroutines
+; call
+; subr WsSat(ph0) : execution of WS with ph0 phaselist and 
+;                   FOV saturation (as passed as argument)    
+;      
+;*******************************************************************
+
+
+; Definitions for WsPpgParams are included in WsOvsDef.mod
+subroutine WsSatMain
+subroutine WsSat
+# 64 "/opt/PV-7.0.0/exp/stan/nmr/lists/pp/PrepModulesHead.mod" 2
+
+
+;**** Selective Inversion Recovery ****
+# 1 "/opt/PV-7.0.0/exp/stan/nmr/lists/pp/SelSliceIrDef.mod" 1
+;****************************************************************
+;
+; Copyright (c) 2018
+; Bruker BioSpin MRI GmbH
+; D-76275 Ettlingen, Germany
+;
+; $Id$
+;
+; All Rights Reserved
+;
+; SlicelSelIr.mod : declaration of slice Selective Inversion 
+;                   Recovery subroutine
+; call SliceSelIr()
+; 
+;
+;****************************************************************
+
+
+if(PVM_SelIrOnOff)
+{
+  define list<frequency> IrFL = {$PVM_SelIrFL} 
+  define delay IrD0 = {$PVM_SelIrD0} ; PVM_InterInvDelay
+  define delay IrD1 = {$PVM_SelIrD1} ; PVM_InterInvEndDelay[0]
+  define delay IrD2 = {$PVM_SelIrD2} ; Spoiler duration
+  define delay IrD3 = {$PVM_SelIrD3} ; Gatepulse duration
+  define delay IrD4 = {$PVM_SelIrD4} ; risetime
+# 28 "/opt/PV-7.0.0/exp/stan/nmr/lists/pp/SelSliceIrDef.mod"
+  define pulse IrP0 = {$PVM_SelIrP0}
+  define loopcounter IrL0 = {$PVM_SelIrL0}
+  define loopcounter IrL1
+}
+
+subroutine SliceSelIr
+
+# 68 "/opt/PV-7.0.0/exp/stan/nmr/lists/pp/PrepModulesHead.mod" 2
+
+
+;**** Tagging ****
+# 1 "/opt/PV-7.0.0/exp/stan/nmr/lists/pp/TagDef.mod" 1
+;****************************************************************
+;
+; Copyright (c) 2018
+; Bruker BioSpin MRI GmbH
+; D-76275 Ettlingen, Germany
+;
+; $Id$
+;
+; All Rights Reserved
+;
+; TagDef.mod : Declaration of tagging subroutine
+; call
+; subr Tagging()
+;
+;****************************************************************
+
+if(PVM_TaggingOnOff)
+{
+define list<frequency> taggfreq={$PVM_TaggingFL}
+
+define delay TaggD0 = {$PVM_TaggingD0}
+define delay TaggD1 = {$PVM_TaggingD1}
+define delay TaggD2 = {$PVM_TaggingD2}
+define delay TaggD3 = {$PVM_TaggingD3}
+define delay TaggD4 = {$PVM_TaggingD4}
+define delay TaggD5 = {$PVM_TaggingD5}
+# 28 "/opt/PV-7.0.0/exp/stan/nmr/lists/pp/TagDef.mod"
+define pulse TaggP0 = {$PVM_TaggingP0}
+define loopcounter TaggL0 = {$PVM_TaggingLp0}
+}
+
+subroutine Tagging
+
+# 72 "/opt/PV-7.0.0/exp/stan/nmr/lists/pp/PrepModulesHead.mod" 2
+
+
+;**** Noe ****
+# 1 "/opt/PV-7.0.0/exp/stan/nmr/lists/pp/NoeDef.mod" 1
+;****************************************************************
+;
+; Copyright (c) 2007
+; Bruker BioSpin MRI GmbH
+; D-76275 Ettlingen, Germany
+;
+; $Id$
+;
+; All Rights Reserved
+;
+; NoeDef.mod: Declaration of Nuclear Overhouser Enhancement 
+;             subroutine
+; call
+; subr Noe()
+;
+;****************************************************************
+
+if(PVM_NoeOnOff == On)
+{
+define delay NoeD0 = {$PVM_NoeD0}
+define delay NoeD1 = {$PVM_NoeD1}
+}
+
+subroutine Noe
+# 76 "/opt/PV-7.0.0/exp/stan/nmr/lists/pp/PrepModulesHead.mod" 2
+
+
+;**** Evolution ****
+# 1 "/opt/PV-7.0.0/exp/stan/nmr/lists/pp/EvolutionDef.mod" 1
+;****************************************************************
+;
+; Copyright (c) 1998-2003
+; Bruker BioSpin MRI GmbH
+; D-76275 Ettlingen, Germany
+;
+; All Rights Reserved
+;
+; EvolutionDef.mod - Evolution Module
+;
+;****************************************************************
+
+if (PVM_EvolutionOnOff == On)
+{
+  define delay       evolDel  = {$PVM_EvolutionDelay}
+  define list<delay> evolTime = {$PVM_EvolutionTime}
+}
+
+subroutine Evolution
+# 80 "/opt/PV-7.0.0/exp/stan/nmr/lists/pp/PrepModulesHead.mod" 2
+
+
+;**** Drift Compensation ****
+# 1 "/opt/PV-7.0.0/exp/stan/nmr/lists/pp/DriftComp.mod" 1
+;==========================================================
+;   subroutine for drift compensation
+;==========================================================
+
+
+if (PVM_DriftCompNavOnOff == On)
+{
+  define list<frequency> txfq = {$PVM_DriftCompNavTxFrq}
+  define list<frequency> rxfq = {$PVM_DriftCompNavRxFrq}
+  define pulse DCP0 = {$PVM_DriftCompNavP0}     
+  define delay DCD0 = {$PVM_DriftCompNavD0}
+  define delay DCD1 = {$PVM_DriftCompNavD1}
+  define delay DCD2 = {$PVM_DriftCompNavD2}
+  define delay DCD3 = {$PVM_DriftCompNavD3}
+  define delay DCD4 = {$PVM_DriftCompNavD4}
+  define delay DCD5 = {$PVM_DriftCompNavD5}
+  define delay DCD6
+  "DCD6 = 10u - de"
+  define list<phase> dcph = { 0 }
+}
+subroutine DriftComp
+# 84 "/opt/PV-7.0.0/exp/stan/nmr/lists/pp/PrepModulesHead.mod" 2
+
+# 20 "/opt/PV-7.0.0/prog/curdir/gupages/ParaVision/exp/lists/pp/nes_IDEAL_spectrum.ppg" 2
+
+# 22 "/opt/PV-7.0.0/prog/curdir/gupages/ParaVision/exp/lists/pp/nes_IDEAL_spectrum.ppg"
+;===========================================================
+;   trajectory measurement
+;===========================================================
+
+if (PVM_TrajAdjustmentRunning == Yes)
+{ 
+subr trajPerform
+;EXEC_begin trajPerform trajPerform()
+# 97 "/opt/PV-7.0.0/exp/stan/nmr/lists/pp/TrajectoryDef.mod"
+ 
+;===============================================================================
+;	set parameters
+;===============================================================================
+
+  define list<frequency> trajList = {$PVM_TrajFreqList}
+
+  define delay trajRfc1
+  define delay trajRfc2   = {$PVM_TrajRfcSpoilDur}
+  define delay trajTErfc  = {$PVM_TrajTEWaitRfc}
+  define delay trajGrad   = {$PVM_TrajGradWait}
+  define delay trajTrig   = {$PVM_TrajTrigDelay}
+  define delay trajRep    = {$PVM_TrajRepDelay}
+  define delay trajAmp    = {$PVM_TrajAmpEnable}
+  define delay trajRise   = {$PVM_TrajRiseTime}
+  define delay trajReph   = {$PVM_TrajSliceRephase}
+  define delay trajSpoil  = {$PVM_TrajSpoilDur}
+  define delay trajTE     = {$PVM_TrajTEWait}
+  define delay trajAcq    = {$PVM_TrajAcq}
+  define delay trajAcqDel = {$PVM_TrajAcqDel}
+  define delay trajAcqEnd = {$PVM_TrajAcqEnd}
+  ; convert to s (order matters!)
+  "trajRfc1   = (trajRfc2 - trajAmp) * 0.001"
+  "trajRfc2   = trajRfc2             * 0.001"
+  "trajTErfc  = trajTErfc            * 0.001"
+  "trajGrad   = trajGrad             * 0.001"
+  "trajTrig   = trajTrig             * 0.001"
+  "trajRep    = trajRep              * 0.001"
+  "trajAmp    = trajAmp              * 0.001"
+  "trajRise   = trajRise             * 0.001"
+  "trajReph   = trajReph             * 0.001"
+  "trajSpoil  = trajSpoil            * 0.001"
+  "trajTE     = trajTE               * 0.001"
+  "trajAcq    = trajAcq              * 0.001"
+  "trajAcqDel = trajAcqDel           * 0.001"
+  "trajAcqEnd = trajAcqEnd           * 0.001"
+
+  define loopcounter trajLocs  = {$PVM_TrajLocs}
+  define loopcounter trajInts  = {$PVM_TrajInterleaves}
+  define loopcounter trajAxes  = {$PVM_TrajAxes}
+
+  "l0 = 0"                          ; count scans (reference / test)
+  define list<grad_scalar, 2> step  ; weight scans (reference / test)
+
+;===============================================================================
+;   D/P                  spec control            gradients
+;===============================================================================
+
+  dccorr                                             \n                           \n if (CONFIG_preemp_type == GREAT_60)               \n {                                                 \n if (CONFIG_instrument_type != Avance_III)      \n {                                              \n 500m setnmr0|34|33|32                          \n }                                              \n else                                           \n {                                              \n 200u setnmr0|34|33|32                          \n }                                              \n }                                                 \n if (CONFIG_preemp_type == DPP_with_SW_Blanking)   \n {\n 10u ctrlgrad 0  \n 10u grad{(0)|(0)|(0) }	  \n 200u setnmr0|34|33|32     \n }\n if (CONFIG_preemp_type == DPP)  \n {    \n 10u groff \n }
+
+  start19,
+    trajRep                 trajList:f1
+  
+;----------------------------------trigger--------------------------------------
+
+    if (PVM_TrajTrig == On)
+    {
+      trajTrig              setnmr3|6
+      trajTrig              trignl1
+      trajTrig              setnmr3^6
+    }
+    if (PVM_TrajGradSync == Yes)
+    {
+      1u	            trigpe3
+    }
+;----------------------------------slice selection------------------------------
+
+    trajRise                                        grad_ramp<object_coord> { PVM_TrajSliceGradX * PVM_TrajAxisX,                                                                               PVM_TrajSliceGradY * PVM_TrajAxisY,                                                                               PVM_TrajSliceGradZ * PVM_TrajAxisZ }
+
+
+
+    trajAmp                 gatepulse 1
+                            (p0:sp0):f1
+    trajRise                                        grad_off
+    trajReph                                        grad_ramp<object_coord> { PVM_TrajSliceRephaseGradX * PVM_TrajAxisX,                                                                               PVM_TrajSliceRephaseGradY * PVM_TrajAxisY,                                                                               PVM_TrajSliceRephaseGradZ * PVM_TrajAxisZ }
+
+
+    trajRise                                        grad_off
+    trajGrad
+    trajTE
+    
+;----------------------------------refocusing ----------------------------------
+
+    if (PVM_TrajSignalType == SignalType_Echo)
+    {
+      trajRfc1                                      grad_ramp<object_coord> { PVM_TrajRfcSpoilGrad * PVM_TrajAxisX,                                                                               PVM_TrajRfcSpoilGrad * PVM_TrajAxisY,                                                                               PVM_TrajRfcSpoilGrad * PVM_TrajAxisZ }
+
+
+      trajAmp               gatepulse 1
+      trajRise                                      grad_ramp<object_coord> { PVM_TrajSliceGradX * PVM_TrajAxisX,                                                                               PVM_TrajSliceGradY * PVM_TrajAxisY,                                                                               PVM_TrajSliceGradZ * PVM_TrajAxisZ }
+
+
+      
+                            (p1:sp1 ph1):f1
+      trajRfc2                                      grad_ramp<object_coord> { PVM_TrajRfcSpoilGrad * PVM_TrajAxisX,                                                                               PVM_TrajRfcSpoilGrad * PVM_TrajAxisY,                                                                               PVM_TrajRfcSpoilGrad * PVM_TrajAxisZ }
+
+
+      trajRise                                      grad_off
+      trajGrad
+      trajTErfc
+    }
+
+;----------------------------------acquisition of test shape--------------------
+
+    if (PVM_TrajGradMode == 0)
+    {
+      if "l0 == 0" goto test_off20
+;EXEC_begin trajTestOn trajTestOn(phase , phase )
+# 49 "/opt/PV-7.0.0/exp/stan/nmr/lists/pp/TrajectoryDef.mod"
+ 
+ 
+;EXEC_end   trajTestOn
+      goto test_end21
+    test_off20,
+;EXEC_begin trajTestOff trajTestOff(phase , phase )
+# 52 "/opt/PV-7.0.0/exp/stan/nmr/lists/pp/TrajectoryDef.mod"
+ 
+ 
+;EXEC_end   trajTestOff
+    test_end21,
+    }
+    else
+    {
+      rdepa						 \n deparx     adc   syrec	          \n derxadc     :r  			  \n deadc      
+      if (PVM_TrajIntMode == Traj_IntAll)
+      {
+        trajAcq             cpdngs17:f1               grad_shape<rps_coord>    { PVM_TrajShape1() * PVM_TrajGradR * PVM_TrajInt1r * step + PVM_TrajShape2() * PVM_TrajGradR * PVM_TrajInt2r * step + PVM_TrajShape3() * PVM_TrajGradR * PVM_TrajInt3r * step, PVM_TrajShape1() * PVM_TrajGradP * PVM_TrajInt1p * step + PVM_TrajShape2() * PVM_TrajGradP * PVM_TrajInt2p * step + PVM_TrajShape3() * PVM_TrajGradP * PVM_TrajInt3p * step, PVM_TrajShape1() * PVM_TrajGradS * PVM_TrajInt1s * step + PVM_TrajShape2() * PVM_TrajGradS * PVM_TrajInt2s * step + PVM_TrajShape3() * PVM_TrajGradS * PVM_TrajInt3s * step }
+      }
+      else
+      {
+        trajAcq             cpdngs17:f1               grad_shape<object_coord> { PVM_TrajShape1() * PVM_TrajGradX * PVM_TrajInt1r * PVM_TrajAxisX * step + PVM_TrajShape2() * PVM_TrajGradX * PVM_TrajInt2r * PVM_TrajAxisX * step + PVM_TrajShape3() * PVM_TrajGradX * PVM_TrajInt3r * PVM_TrajAxisX * step, PVM_TrajShape1() * PVM_TrajGradY * PVM_TrajInt1p * PVM_TrajAxisY * step + PVM_TrajShape2() * PVM_TrajGradY * PVM_TrajInt2p * PVM_TrajAxisY * step + PVM_TrajShape3() * PVM_TrajGradY * PVM_TrajInt3p * PVM_TrajAxisY * step, PVM_TrajShape1() * PVM_TrajGradZ * PVM_TrajInt1s * PVM_TrajAxisZ * step + PVM_TrajShape2() * PVM_TrajGradZ * PVM_TrajInt2s * PVM_TrajAxisZ * step + PVM_TrajShape3() * PVM_TrajGradZ * PVM_TrajInt3s * PVM_TrajAxisZ * step }
+      }      
+      trajAcqDel                                    grad_off
+      trajAcqEnd            eoscnp
+    }
+
+;----------------------------------slice spoiler--------------------------------
+
+    trajSpoil                                       grad_ramp<object_coord> { PVM_TrajSpoilGrad * PVM_TrajAxisX,                                                                               PVM_TrajSpoilGrad * PVM_TrajAxisY,                                                                               PVM_TrajSpoilGrad * PVM_TrajAxisZ }
+
+
+    trajRise                                        grad_off
+
+;----------------------------------loop slice position--------------------------
+    0u                      trajList.inc
+  lo to start19 times trajLocs
+  
+; rewind frequency list
+  freq122,
+    0u                      trajList.dec
+  lo to freq122 times trajLocs
+;----------------------------------loop scans-----------------------------------
+; reference scan only for first interleave
+    if "l0 != 0" goto scans_end23
+      0u                   iu0
+                                                    step.inc
+      goto start19
+    scans_end23,
+;----------------------------------loop interleaves-----------------------------
+    if (PVM_TrajInterleaves > 1)
+    {
+;EXEC_begin trajIncrement trajIncrement()
+# 73 "/opt/PV-7.0.0/exp/stan/nmr/lists/pp/TrajectoryDef.mod"
+ 
+  if (PVM_TrajGradMode == 0)
+  {
+;EXEC_begin trajIncr trajIncr()
+# 55 "/opt/PV-7.0.0/exp/stan/nmr/lists/pp/TrajectoryDef.mod"
+ 
+ 
+;EXEC_end   trajIncr
+  }
+  else
+  {
+    PVM_TrajInt1r.inc
+    PVM_TrajInt2r.inc
+    PVM_TrajInt3r.inc
+    PVM_TrajInt1p.inc
+    PVM_TrajInt2p.inc
+    PVM_TrajInt3p.inc
+    PVM_TrajInt1s.inc
+    PVM_TrajInt2s.inc
+    PVM_TrajInt3s.inc
+  }
+ 
+;EXEC_end   trajIncrement
+      lo to start19 times trajInts
+    }
+;----------------------------------loop axes------------------------------------
+                                                    grad_matrix.inc                                     
+                                                    PVM_TrajAxisX.inc
+                                                    PVM_TrajAxisY.inc
+                                                    PVM_TrajAxisZ.inc
+; advance frequency list
+  freq224,
+    0u                      trajList.inc
+  lo to freq224 times trajLocs
+; reset scans
+    "l0 = 0"
+                                                    step.res
+  lo to start19 times trajAxes
+;----------------------------------loop averages--------------------------------
+  lo to start19 times NA
+
+  if (ACQ_scan_type != Scan_Experiment) \n{ \n goto start19 \n}
+  exit
+ 
+;EXEC_end   trajPerform
+# 28 "/opt/PV-7.0.0/prog/curdir/gupages/ParaVision/exp/lists/pp/nes_IDEAL_spectrum.ppg"
+}
+else
+{
+;===========================================================
+;   definitions
+;===========================================================
+define delay dGrad  = {$GradWait}
+define delay dFq    = {$FreqSwitch}
+define delay dRise  = {$RiseT}
+define delay dAmp   = {$AmpEnable}
+define delay dSpoil = {$SliceSpoiler.dur}
+define delay dReph  = {$RephGradDur}
+define delay dRfc2  = {$RfcSpoilDur}
+define delay dRfc1
+
+# 45 "/opt/PV-7.0.0/prog/curdir/gupages/ParaVision/exp/lists/pp/nes_IDEAL_spectrum.ppg"
+define list<delay> dTR    = {$TRWaitList} ; TR wait list, Converted in s in backbone
+define list<delay> dTE    = {$TEWaitList} ; TE increments list, Converted in s in backbone
+define list<delay> dTErfc = {$TEWaitRfcList} ; Converted in s in backbone
+define loopcounter numbOfSpectrum   = {$NumberOfSpectrums} ;number of repetition for spectrum acquisition
+define list<loopcounter> noGradRep  = {$NoGradRepetitionNumberPP} ;number of repetition for spectrum acquisition
+define loopcounter Incrloop         = {$PVM_NSpiralIncrPP} ;number of spiral increments
+
+"l0 = 1" ;loop counter for spectrum acquisition condition
+"l1 = 1" ;loop counter for spiral icrements
+
+; convert to s
+"dRfc1   = (dRfc2 - dAmp) * 0.001"
+"dRfc2   = dRfc2          * 0.001"
+"dGrad   = dGrad          * 0.001"
+"dFq     = dFq            * 0.001"
+"dRise   = dRise          * 0.001"
+"dAmp    = dAmp           * 0.001"
+"dSpoil  = dSpoil         * 0.001"
+"dReph   = dReph          * 0.001"
+ 
+# 67 "/opt/PV-7.0.0/prog/curdir/gupages/ParaVision/exp/lists/pp/nes_IDEAL_spectrum.ppg"
+grad_zero_for_gs <ACQ_spatial_phase_2>  
+  
+;===========================================================
+;   D/P               spec control          gradients
+;===========================================================
+
+    
+   dccorr                                             \n                           \n if (CONFIG_preemp_type == GREAT_60)               \n {                                                 \n if (CONFIG_instrument_type != Avance_III)      \n {                                              \n 500m setnmr0|34|33|32                          \n }                                              \n else                                           \n {                                              \n 200u setnmr0|34|33|32                          \n }                                              \n }                                                 \n if (CONFIG_preemp_type == DPP_with_SW_Blanking)   \n {\n 10u ctrlgrad 0  \n 10u grad{(0)|(0)|(0) }	  \n 200u setnmr0|34|33|32     \n }\n if (CONFIG_preemp_type == DPP)  \n {    \n 10u groff \n }
+ 
+;----------------- preparation -----------------------------
+
+subr TriggerOutStart
+;EXEC_begin TriggerOutStart TriggerOutStart()
+# 30 "/opt/PV-7.0.0/exp/stan/nmr/lists/pp/TriggerOutDef.mod"
+ 
+  if (PVM_TriggerOutMode == AT_START)
+  {
+;EXEC_begin TriggerOut TriggerOut()
+# 21 "/opt/PV-7.0.0/exp/stan/nmr/lists/pp/TriggerOutDef.mod"
+ 
+  if (PVM_TriggerOutOnOff == On)
+  {
+    trigOutDel    setnmr3|28
+    trigOutDur    setnmr3^28
+  }
+ 
+;EXEC_end   TriggerOut
+  }
+ 
+;EXEC_end   TriggerOutStart
+# 78 "/opt/PV-7.0.0/prog/curdir/gupages/ParaVision/exp/lists/pp/nes_IDEAL_spectrum.ppg"
+# 80 "/opt/PV-7.0.0/prog/curdir/gupages/ParaVision/exp/lists/pp/nes_IDEAL_spectrum.ppg"
+start,
+subr TriggerPhase
+;EXEC_begin TriggerPhase TriggerPhase()
+# 37 "/opt/PV-7.0.0/exp/stan/nmr/lists/pp/TriggerDef.mod"
+ 
+  if (PVM_TriggerMode == per_PhaseStep)
+  {
+;EXEC_begin Trigger Trigger()
+# 23 "/opt/PV-7.0.0/exp/stan/nmr/lists/pp/TriggerDef.mod"
+ 
+  if (PVM_TriggerModule == On)
+  {
+    trigDur     setnmr3|6
+  
+    trigDur     trignl1
+    trigDur     trigpe3
+  
+    trigDur     setnmr3^6 
+    trigDel
+  }
+ 
+;EXEC_end   Trigger
+  }
+ 
+;EXEC_end   TriggerPhase
+# 81 "/opt/PV-7.0.0/prog/curdir/gupages/ParaVision/exp/lists/pp/nes_IDEAL_spectrum.ppg"
+subr TriggerOutVolume
+;EXEC_begin TriggerOutVolume TriggerOutVolume()
+# 46 "/opt/PV-7.0.0/exp/stan/nmr/lists/pp/TriggerOutDef.mod"
+ 
+  if (PVM_TriggerOutMode == PER_VOLUME)
+  {
+;EXEC_begin TriggerOut TriggerOut()
+# 21 "/opt/PV-7.0.0/exp/stan/nmr/lists/pp/TriggerOutDef.mod"
+ 
+  if (PVM_TriggerOutOnOff == On)
+  {
+    trigOutDel    setnmr3|28
+    trigOutDur    setnmr3^28
+  }
+ 
+;EXEC_end   TriggerOut
+  }
+ 
+;EXEC_end   TriggerOutVolume
+# 82 "/opt/PV-7.0.0/prog/curdir/gupages/ParaVision/exp/lists/pp/nes_IDEAL_spectrum.ppg"
+subr Tagging
+;EXEC_begin Tagging Tagging()
+# 32 "/opt/PV-7.0.0/exp/stan/nmr/lists/pp/TagDef.mod"
+ 
+  if(PVM_TaggingOnOff)
+  {
+                 0u    taggfreq.res
+
+    if(PVM_TaggingMode == DANTE)
+    {
+                10u    taggfreq:f1  
+             TaggD4    grad_ramp{PVM_TaggingGradAmp1, PVM_TaggingGradAmp2,0}
+             TaggD5    gatepulse 1
+            (TaggP0:   sp45):f1
+
+       tag125, TaggD2
+             TaggD5    gatepulse 1
+            (TaggP0:   sp45):f1
+
+       lo to tag125 times TaggL0
+
+             TaggD4     grad_off
+
+      if(PVM_TaggingDir == Tagging_grid)
+      {
+             TaggD1     taggfreq.inc
+                10u     taggfreq:f1
+             TaggD5     gatepulse 1
+             TaggD4     grad_ramp{PVM_TaggingGradAmp3,PVM_TaggingGradAmp4,0} 
+            (TaggP0:    sp45):f1
+
+       tag226, TaggD2
+             TaggD5     gatepulse 1
+            (TaggP0:    sp45):f1
+
+       lo to tag226 times TaggL0
+
+             TaggD4     grad_off
+      }
+    }
+
+    if(PVM_TaggingMode == SPAMM)
+    {
+                10u     taggfreq:f1
+             TaggD5     gatepulse 1
+            (TaggP0:    sp45):f1
+
+       tag327, TaggD2     grad_ramp{PVM_TaggingGradAmp1,PVM_TaggingGradAmp2,0}
+             TaggD4     grad_off
+             TaggD5     gatepulse 1
+            (TaggP0:    sp45):f1
+
+       lo to tag327 times TaggL0
+
+      if(PVM_TaggingDir == Tagging_grid)
+      {
+             TaggD1     taggfreq.inc
+                10u     taggfreq:f1
+             TaggD5     gatepulse 1
+            (TaggP0:    sp45):f1
+
+       tag428, TaggD2     grad_ramp{PVM_TaggingGradAmp3,PVM_TaggingGradAmp4,0}
+             TaggD4     grad_off
+             TaggD5     gatepulse 1
+            (TaggP0:    sp45):f1
+
+       lo to tag428 times TaggL0
+      }
+    }
+                10u
+             TaggD3     grad_ramp{PVM_TaggingSpoilAmp,0,0}
+             TaggD4     grad_off
+             TaggD0
+  }
+
+ 
+;EXEC_end   Tagging
+# 83 "/opt/PV-7.0.0/prog/curdir/gupages/ParaVision/exp/lists/pp/nes_IDEAL_spectrum.ppg"
+slice,
+subr TriggerSlice
+;EXEC_begin TriggerSlice TriggerSlice()
+# 45 "/opt/PV-7.0.0/exp/stan/nmr/lists/pp/TriggerDef.mod"
+ 
+  if (PVM_TriggerMode == per_Slice)
+  {
+;EXEC_begin Trigger Trigger()
+# 23 "/opt/PV-7.0.0/exp/stan/nmr/lists/pp/TriggerDef.mod"
+ 
+  if (PVM_TriggerModule == On)
+  {
+    trigDur     setnmr3|6
+  
+    trigDur     trignl1
+    trigDur     trigpe3
+  
+    trigDur     setnmr3^6 
+    trigDel
+  }
+ 
+;EXEC_end   Trigger
+  }
+ 
+;EXEC_end   TriggerSlice
+# 85 "/opt/PV-7.0.0/prog/curdir/gupages/ParaVision/exp/lists/pp/nes_IDEAL_spectrum.ppg"
+subr TriggerOutSlice
+;EXEC_begin TriggerOutSlice TriggerOutSlice()
+# 38 "/opt/PV-7.0.0/exp/stan/nmr/lists/pp/TriggerOutDef.mod"
+ 
+  if (PVM_TriggerOutMode == PER_SLICE)
+  {
+;EXEC_begin TriggerOut TriggerOut()
+# 21 "/opt/PV-7.0.0/exp/stan/nmr/lists/pp/TriggerOutDef.mod"
+ 
+  if (PVM_TriggerOutOnOff == On)
+  {
+    trigOutDel    setnmr3|28
+    trigOutDur    setnmr3^28
+  }
+ 
+;EXEC_end   TriggerOut
+  }
+ 
+;EXEC_end   TriggerOutSlice
+# 86 "/opt/PV-7.0.0/prog/curdir/gupages/ParaVision/exp/lists/pp/nes_IDEAL_spectrum.ppg"
+    if (GradSync == Yes)
+    {
+	1u	trigpe3
+    }
+subr FovSat
+;EXEC_begin FovSat FovSat()
+# 34 "/opt/PV-7.0.0/exp/stan/nmr/lists/pp/FovSatDef.mod"
+ 
+  if (PVM_FovSatOnOff == On)
+  {
+                 5u   PVM_FovSatGrad.res
+                 5u   fovSatList.res
+
+    fov29, fovSatRamp   grad_ramp<magnet_coord>{PVM_FovSatGrad[]}
+                10u   fovSatList:f1 
+          fovSatAmp   gatepulse 1
+         (fovSatPul   :sp41):f1
+        fovSatSpoil   grad_ramp{0, 0, PVM_FovSatSpoilAmp}
+                 0u   fovSatList.inc
+                 0u   PVM_FovSatGrad.inc
+    lo to fov29 times PVM_FovSatNSlices
+         
+         fovSatRamp   grad_off
+         fovSatWait
+  }
+ 
+;EXEC_end   FovSat
+# 91 "/opt/PV-7.0.0/prog/curdir/gupages/ParaVision/exp/lists/pp/nes_IDEAL_spectrum.ppg"
+subr MagTrans
+;EXEC_begin MagTrans MagTrans()
+# 33 "/opt/PV-7.0.0/exp/stan/nmr/lists/pp/MagTransDef.mod"
+ 
+
+  if(PVM_MagTransOnOff)
+  {
+ 
+      50u  modlis3.res
+      MtD1 
+mtc30,MtD2 modlis3:f1 gatepulse 1
+      MtP0:sp43:f1 
+      lo to mtc30 times MtLp0
+      MtD3  		grad_ramp{0, 0, PVM_MagTransSpoiler}
+      MtD0       	groff
+      100u
+  }
+ 
+;EXEC_end   MagTrans
+# 92 "/opt/PV-7.0.0/prog/curdir/gupages/ParaVision/exp/lists/pp/nes_IDEAL_spectrum.ppg"
+subr FatSup
+;EXEC_begin FatSup FatSup()
+# 32 "/opt/PV-7.0.0/exp/stan/nmr/lists/pp/FatSupDef.mod"
+ 
+  if (PVM_FatSupPerform == Yes)
+  {
+           10u       fatSupList:f1
+     fatSupAmp       gatepulse 1
+    (fatSupPul       :sp40):f1
+   fatSupSpoil       grad_ramp{0, 0, PVM_FatSupSpoilAmp}
+    fatSupRamp       grad_off
+    fatSupWait
+  }
+ 
+;EXEC_end   FatSup
+# 93 "/opt/PV-7.0.0/prog/curdir/gupages/ParaVision/exp/lists/pp/nes_IDEAL_spectrum.ppg"
+    dFq               fq8(receive):f1
+    dFq               fq1:f1
+
+movie, 
+    dGrad
+    dSpoil            grad_ramp{0, 0, SliceSpoiler.ampl}
+    
+;----------------- excitation ------------------------------
+
+    dRise             grad_ramp{0, 0, SliceGrad}
+    dAmp              gatepulse 1
+    (p0:sp0 ph0):f1
+    dRise             grad_off
+    if (PVM_SignalType != SignalType_Echo)
+    {
+        dFq               fq8:f1 ;to avoid slice shifting problem, we switch to fq8 before TE increments
+    }
+    dReph             grad_ramp{0, 0, -SliceRephGrad + ACQ_spatial_phase_2 * Phase3dGrad}
+    dRise             grad_off
+    dGrad
+    dTE
+    
+;----------------- refocusing ------------------------------
+# 118 "/opt/PV-7.0.0/prog/curdir/gupages/ParaVision/exp/lists/pp/nes_IDEAL_spectrum.ppg"
+    if (PVM_SignalType == SignalType_Echo)
+    {
+      dRfc1           grad_ramp{0, 0, RfcSpoilGrad}
+      dAmp            gatepulse 1
+      dRise           grad_ramp{0, 0, SliceGrad}
+      (p1:sp1 ph1):f1
+      dRfc2           grad_ramp{0, 0, RfcSpoilGrad}
+      dRise           grad_off
+      dGrad
+      dTErfc
+    }
+   
+;----------------- acquisition -----------------------------
+
+spiralrepet,
+    ;subr spiralAcq(ph0, ph1)
+    
+    if "l0 == noGradRep"
+    {
+subr spiralAcq_no
+;EXEC_begin spiralAcq_no spiralAcq_no(phase ph0, phase ph1)
+# 98 "/opt/PV-7.0.0/prog/curdir/gupages/ParaVision/exp/lists/pp/SpiralDef_grad_modified.mod"
+ 
+  rdepa						 \n deparx     adc ph0  syrec	          \n derxadc     ph1:r  			  \n deadc      
+  SpirD0 cpdngs17:f1 ;grad_shape {PVM_SpiralShape1() * PVM_SpiralInterleavCos * 100 - PVM_SpiralShape2() * PVM_SpiralInterleavSin * 100, PVM_SpiralShape1() * PVM_SpiralInterleavSin * 100 + PVM_SpiralShape2() * PVM_SpiralInterleavCos * 100, 0}
+  SpirD1           ;grad_off
+  SpirD2 eoscnp
+ 
+;EXEC_end   spiralAcq_no
+# 137 "/opt/PV-7.0.0/prog/curdir/gupages/ParaVision/exp/lists/pp/nes_IDEAL_spectrum.ppg"
+       ;subr spiralAcq(ph0, ph1)
+    }
+    else
+    {
+subr spiralAcq
+;EXEC_begin spiralAcq spiralAcq(phase ph0, phase ph1)
+# 106 "/opt/PV-7.0.0/prog/curdir/gupages/ParaVision/exp/lists/pp/SpiralDef_grad_modified.mod"
+ 
+  rdepa						 \n deparx     adc ph0  syrec	          \n derxadc     ph1:r  			  \n deadc      
+  SpirD0 cpdngs17:f1 grad_shape {PVM_SpiralShape1() * PVM_SpiralInterleavCos * 100 - PVM_SpiralShape2() * PVM_SpiralInterleavSin * 100, PVM_SpiralShape1() * PVM_SpiralInterleavSin * 100 + PVM_SpiralShape2() * PVM_SpiralInterleavCos * 100, 0}
+  SpirD1           grad_off
+  SpirD2 eoscnp
+ 
+;EXEC_end   spiralAcq
+# 142 "/opt/PV-7.0.0/prog/curdir/gupages/ParaVision/exp/lists/pp/nes_IDEAL_spectrum.ppg"
+    }
+
+    
+;----------------- phase rewinding -------------------------
+# 148 "/opt/PV-7.0.0/prog/curdir/gupages/ParaVision/exp/lists/pp/nes_IDEAL_spectrum.ppg"
+    if (ACQ_dim == 3)
+    {
+      dReph           grad_ramp{0, 0, ACQ_spatial_phase_2 * (-Phase3dGrad)}
+      dRise           grad_off
+    }
+
+;----------------- loops -----------------------------------
+
+    lo to spiralrepet times PVM_SpiralRep
+# 158 "/opt/PV-7.0.0/prog/curdir/gupages/ParaVision/exp/lists/pp/nes_IDEAL_spectrum.ppg"
+    lo to movie times PVM_NMovieFrames
+
+    lo to slice times NSLICES
+
+    dTR
+# 165 "/opt/PV-7.0.0/prog/curdir/gupages/ParaVision/exp/lists/pp/nes_IDEAL_spectrum.ppg"
+    0u                ipp0                  grad_matrix.res
+
+    lo to start times NA
+
+    0u                rpp0 
+subr spiralLoop
+;EXEC_begin spiralLoop spiralLoop(any start)
+# 56 "/opt/PV-7.0.0/prog/curdir/gupages/ParaVision/exp/lists/pp/SpiralDef_grad_modified.mod"
+ 
+  ; dummy scans
+  if (PVM_SpiralDummyScans > 0) ; only if initialised
+  {
+    if "SpirNDum > 0"
+    {
+      "SpirNDum = SpirNDum - 1"
+
+      if (ACQ_scan_type == Scan_Experiment) ; increments only for GOP
+      {
+        if "SpirNDum == 0"
+        {
+;EXEC_begin spiralReset spiralReset()
+# 48 "/opt/PV-7.0.0/prog/curdir/gupages/ParaVision/exp/lists/pp/SpiralDef_grad_modified.mod"
+ 
+  PVM_SpiralInterleavCos.res
+  PVM_SpiralInterleavSin.res
+ 
+;EXEC_end   spiralReset
+        }
+        else
+        {
+;EXEC_begin spiralIncr spiralIncr()
+# 34 "/opt/PV-7.0.0/prog/curdir/gupages/ParaVision/exp/lists/pp/SpiralDef_grad_modified.mod"
+ 
+  PVM_SpiralInterleavCos.inc
+  PVM_SpiralInterleavSin.inc
+ 
+;EXEC_end   spiralIncr
+        }
+      }
+
+      goto start
+    }
+  }
+
+  ; real scans
+  if (ACQ_scan_type == Scan_Experiment)
+  {
+;EXEC_begin spiralIncr spiralIncr()
+# 34 "/opt/PV-7.0.0/prog/curdir/gupages/ParaVision/exp/lists/pp/SpiralDef_grad_modified.mod"
+ 
+  PVM_SpiralInterleavCos.inc
+  PVM_SpiralInterleavSin.inc
+ 
+;EXEC_end   spiralIncr
+    lo to start times SpirNInt
+  }
+ 
+;EXEC_end   spiralLoop
+# 170 "/opt/PV-7.0.0/prog/curdir/gupages/ParaVision/exp/lists/pp/nes_IDEAL_spectrum.ppg"
+    
+    if (ACQ_dim == 3)
+    {
+      0u       ACQ_spatial_phase_2.inc
+      lo to start times ACQ_size[2]
+    }
+    
+    lo to start times NAE
+    
+subr Evolution
+;EXEC_begin Evolution Evolution()
+# 19 "/opt/PV-7.0.0/exp/stan/nmr/lists/pp/EvolutionDef.mod"
+ 
+  if (PVM_EvolutionOnOff == On)
+  {
+    if (PVM_EvolutionMode == Variable_Delay)
+    {
+      evolTime
+      evolTime.inc
+    }
+    else
+    {
+      evolDel
+    }
+  }
+ 
+;EXEC_end   Evolution
+# 180 "/opt/PV-7.0.0/prog/curdir/gupages/ParaVision/exp/lists/pp/nes_IDEAL_spectrum.ppg"
+# 182 "/opt/PV-7.0.0/prog/curdir/gupages/ParaVision/exp/lists/pp/nes_IDEAL_spectrum.ppg"
+    if "l1 < Incrloop"
+    {
+       dTE.inc
+       dTErfc.inc
+       dTR.inc
+       "l1=l1+1"
+    }
+    else
+    {
+       dTE.res
+       dTErfc.res
+       dTR.res
+       "l1=1"
+    }
+    
+    if "l0 == noGradRep"
+    {
+       dTE.res
+       dTErfc.res
+       dTR.res
+       "l1=1"
+       noGradRep.inc
+    }
+    "l0=l0+1"
+
+    lo to start times NR;
+    
+    if (ACQ_scan_type != Scan_Experiment) \n{ \n goto start \n}
+
+  exit
+}
+# 214 "/opt/PV-7.0.0/prog/curdir/gupages/ParaVision/exp/lists/pp/nes_IDEAL_spectrum.ppg"
+;============================================================
+;phase lists
+ph0 = 0 2
+ph1 = 1
+;============================================================

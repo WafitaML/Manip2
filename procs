@@ -1,0 +1,13 @@
+##TITLE=Parameter List, ParaVision 7.0.0
+##JCAMPDX=4.24
+##DATATYPE=Parameter Values
+##ORIGIN=Bruker BioSpin MRI GmbH
+##OWNER=gupages
+$$ 2025-06-19 16:58:02.538 +0200  gupages@clt-spectro500-s
+$$ /opt/PV-7.0.0/data/gupages/20250619_094200_13C_DNPSetup_250619_1_4/15/pdata/1/procs
+$$ process /opt/PV-7.0.0/prog/bin/parxserver
+##$OFFSET=1589.43143430872
+##$SF=125.831159295641
+##$YMAX_p=32766
+##$YMIN_p=0
+##END=

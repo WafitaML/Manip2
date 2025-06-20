@@ -1,0 +1,15 @@
+##TITLE=Parameter List, ParaVision 7.0.0
+##JCAMPDX=4.24
+##DATATYPE=Parameter Values
+##ORIGIN=Bruker BioSpin MRI GmbH
+##OWNER=gupages
+$$ 2025-06-19 16:58:33.236 +0200  gupages@clt-spectro500-s
+$$ /opt/PV-7.0.0/data/gupages/20250619_094200_13C_DNPSetup_250619_1_4/15/pdata/1/methreco
+$$ process /opt/PV-7.0.0/prog/mod/acq_out
+##$PVM_TrajRecoMode=Traj_Theoretical
+##$PVM_TrajDebug=Yes
+##$PVM_GradientLinearityCorrection=No
+$$ @vis= PVM_TrajRecoMode PVM_TrajDebug TrajRecoParameters MethodRecoGroup
+$$ @vis= StandardMethodRecoGroup
+##END=
+$$ File finished by PARX at 2025-06-19 16:58:33.237 +0200
